@@ -137,7 +137,7 @@ CALCULATE(
 )
 
 ---
-Módulo: Función UMMARIZE
+Módulo: Función SUMMARIZE
 
 ---
 
