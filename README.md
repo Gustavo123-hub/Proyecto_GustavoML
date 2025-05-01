@@ -78,18 +78,21 @@ Puedes ver el dashboard en línea a través de Power BI Public:
 
 El proyecto utiliza más de 15 medidas DAX para cálculos como:
 
-### Álbumes Distintos por Año = CALCULATE(DISTINCTCOUNT(Album[AlbumId]), RELATEDTABLE(Track), RELATEDTABLE(InvoiceLine), RELATEDTABLE(Invoice))
+#### Álbumes Distintos por Año = 
+CALCULATE(DISTINCTCOUNT(Album[AlbumId]), RELATEDTABLE(Track), RELATEDTABLE(InvoiceLine), RELATEDTABLE(Invoice))
 
-### Artistas Distintos por Año2 = 
+#### Artistas Distintos por Año2 = 
+
 CALCULATE(
     DISTINCTCOUNT(Album[ArtistId]),
     ALLEXCEPT(Invoice, Invoice[AñoVenta]),
     RELATEDTABLE(Track)
 )
 
-### Clientes Distintos por Año = CALCULATE(DISTINCTCOUNT(Customer[CustomerId]), RELATEDTABLE(Invoice))
+#### Clientes Distintos por Año = 
+CALCULATE(DISTINCTCOUNT(Customer[CustomerId]), RELATEDTABLE(Invoice))
 
-### CrecimientoVentasInteranual = 
+#### CrecimientoVentasInteranual = 
 VAR VentasActuales = SUM('InvoiceLine'[Total de Ventas])
 VAR VentasAct = CALCULATE(
     SUM('InvoiceLine'[Total de Ventas]),
@@ -102,23 +105,26 @@ RETURN
         DIVIDE(VentasAct - VentasAct, VentasAct
     ))
 
-### Géneros Distintos por Año = CALCULATE(DISTINCTCOUNT(Genre[GenreId]), RELATEDTABLE(Track), RELATEDTABLE(InvoiceLine), RELATEDTABLE(Invoice))
+#### Géneros Distintos por Año = 
+CALCULATE(DISTINCTCOUNT(Genre[GenreId]), RELATEDTABLE(Track), RELATEDTABLE(InvoiceLine), RELATEDTABLE(Invoice))
 
-### Ticket Promedio por Cliente = [Ventas Totales] / DISTINCTCOUNT('Customer'[CustomerId])
+#### Ticket Promedio por Cliente = 
+[Ventas Totales] / DISTINCTCOUNT('Customer'[CustomerId])
 
-### Ventas Anuales = 
+#### Ventas Anuales = 
 CALCULATE(
     [Ventas Totales]
 )
 
-### Ventas por Artista = 
+#### Ventas por Artista = 
 CALCULATE(
     SUM(InvoiceLine[Total de Ventas]),
     RELATEDTABLE(Track),
     RELATEDTABLE(Album)
 )
 
-### Ventas Totales = SUM(InvoiceLine[Total de Ventas]) 
+#### Ventas Totales = 
+SUM(InvoiceLine[Total de Ventas]) 
 
 *Archivo con medidas:* (https://goo.su/o8Jlf)
 
