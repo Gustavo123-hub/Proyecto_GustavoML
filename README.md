@@ -77,11 +77,13 @@ Puedes ver el dashboard en línea a través de Power BI Public:
 ## Medidas DAX utilizadas
 
 El proyecto utiliza más de 15 medidas DAX para cálculos como:
-
-#### Álbumes Distintos por Año = 
+---
+#### Módulo: Función  CALCULATE
+---
+Álbumes Distintos por Año = 
 CALCULATE(DISTINCTCOUNT(Album[AlbumId]), RELATEDTABLE(Track), RELATEDTABLE(InvoiceLine), RELATEDTABLE(Invoice))
 
-#### Artistas Distintos por Año2 = 
+Artistas Distintos por Año2 = 
 
 CALCULATE(
     DISTINCTCOUNT(Album[ArtistId]),
@@ -89,10 +91,10 @@ CALCULATE(
     RELATEDTABLE(Track)
 )
 
-#### Clientes Distintos por Año = 
+Clientes Distintos por Año = 
 CALCULATE(DISTINCTCOUNT(Customer[CustomerId]), RELATEDTABLE(Invoice))
 
-#### CrecimientoVentasInteranual = 
+CrecimientoVentasInteranual = 
 VAR VentasActuales = SUM('InvoiceLine'[Total de Ventas])
 VAR VentasAct = CALCULATE(
     SUM('InvoiceLine'[Total de Ventas]),
@@ -105,26 +107,53 @@ RETURN
         DIVIDE(VentasAct - VentasAct, VentasAct
     ))
 
-#### Géneros Distintos por Año = 
+Géneros Distintos por Año = 
 CALCULATE(DISTINCTCOUNT(Genre[GenreId]), RELATEDTABLE(Track), RELATEDTABLE(InvoiceLine), RELATEDTABLE(Invoice))
 
-#### Ticket Promedio por Cliente = 
+---
+Módulo: Funciones matemáticas y estadísticas
+
+---
+Ticket Promedio por Cliente = 
 [Ventas Totales] / DISTINCTCOUNT('Customer'[CustomerId])
 
-#### Ventas Anuales = 
+Ventas Anuales = 
 CALCULATE(
     [Ventas Totales]
 )
 
-#### Ventas por Artista = 
+Ventas Totales = 
+SUM(InvoiceLine[Total de Ventas]) 
+---
+
+Módulo: Función RELATED
+
+---
+Ventas por Artista = 
 CALCULATE(
     SUM(InvoiceLine[Total de Ventas]),
     RELATEDTABLE(Track),
     RELATEDTABLE(Album)
 )
 
-#### Ventas Totales = 
-SUM(InvoiceLine[Total de Ventas]) 
+---
+Módulo: Función UMMARIZE
+
+---
+
+
+Top 5 Albunes = 
+TOPN(5, SUMMARIZE('Album', 'Album'[AlbumId], "Total Venta", [Ventas Totales]), [Total Venta], DESC)
+
+Top 5 Artistas = 
+TOPN(5, SUMMARIZE('Artist', 'Artist'[ArtistId], "TotalVenta", [Ventas Totales]), [TotalVenta], DESC)
+
+
+Top 5 Clientes = 
+TOPN(5, SUMMARIZE('Customer', 'Customer'[CustomerId], "TotalVenta", [Ventas Totales]), [TotalVenta], DESC)
+
+Top 5 Generos = 
+TOPN(5, SUMMARIZE('Genre', 'Genre'[GenreId], "TotalVenta", [Ventas Totales]), [TotalVenta], DESC)
 
 *Archivo con medidas:* (https://goo.su/o8Jlf)
 
